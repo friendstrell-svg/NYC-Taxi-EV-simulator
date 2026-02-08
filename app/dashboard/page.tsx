@@ -49,12 +49,25 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <h1 className="text-2xl font-bold text-gray-900">
-          NYC Taxi EV Simulator - Dashboard
-        </h1>
-        <p className="text-sm text-gray-600">
-          Adjust parameters to see real-time TCO analysis
-        </p>
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">
+              NYC Taxi EV Simulator - Dashboard
+            </h1>
+            <p className="text-sm text-gray-600">
+              Adjust parameters to see real-time TCO analysis
+            </p>
+          </div>
+          <a 
+            href="/methodology" 
+            className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center"
+          >
+            View Methodology
+            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
       </header>
       
       {/* Scenario Selector & View Toggle */}
@@ -275,6 +288,63 @@ export default function Dashboard() {
             <h2 className="text-xl font-bold mb-4 text-gray-900">
               Results
             </h2>
+
+            {/* Business Summary - Front & Center */}
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow-lg p-6 mb-6 text-white">
+              <h3 className="text-lg font-bold mb-3 flex items-center">
+                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                  <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
+                </svg>
+                Business Case Summary
+                {viewMode === 'per_taxi' && <span className="ml-2 text-sm font-normal opacity-90">(Per Taxi)</span>}
+                {viewMode === 'fleet' && <span className="ml-2 text-sm font-normal opacity-90">(Fleet-Wide)</span>}
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div>
+                  <div className="text-blue-100 text-xs font-semibold uppercase tracking-wide mb-1">
+                    NPV Advantage
+                  </div>
+                  <div className="text-2xl font-bold">
+                    {displayOutputs.deltaNpv < 0 
+                      ? `$${Math.abs(displayOutputs.deltaNpv / 1000).toFixed(0)}k savings`
+                      : `$${(displayOutputs.deltaNpv / 1000).toFixed(0)}k loss`
+                    }
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="text-blue-100 text-xs font-semibold uppercase tracking-wide mb-1">
+                    Payback Period
+                  </div>
+                  <div className="text-2xl font-bold">
+                    {displayOutputs.paybackYear !== null 
+                      ? `${displayOutputs.paybackYear} years`
+                      : 'Never'
+                    }
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="text-blue-100 text-xs font-semibold uppercase tracking-wide mb-1">
+                    CO₂ Reduction
+                  </div>
+                  <div className="text-2xl font-bold">
+                    {((displayOutputs.co2SavedTotal / (displayOutputs.co2SavedTotal + (displayOutputs.annualSeries[inputs.years]?.co2Ev || 1))) * 100).toFixed(0)}%
+                  </div>
+                </div>
+              </div>
+              
+              <div className="border-t border-blue-500 pt-3 mt-3">
+                <p className="text-sm text-blue-50">
+                  {displayOutputs.deltaNpv < 0 
+                    ? `✓ EV transition shows positive NPV. Break-even occurs in year ${displayOutputs.paybackYear || 'N/A'}.`
+                    : `⚠ Current assumptions show ICE as more cost-effective. Adjust scenarios to explore conditions favoring EVs.`
+                  }
+                </p>
+              </div>
+            </div>
             
             {/* KPI Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

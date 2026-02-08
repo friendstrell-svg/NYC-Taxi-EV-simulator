@@ -69,9 +69,12 @@ export default function Home() {
           >
             Run the Model
           </a>
-          <button className="bg-white hover:bg-gray-50 text-gray-700 font-semibold py-3 px-8 rounded-lg shadow-md border border-gray-300 transition-colors">
+          <a 
+            href="/methodology" 
+            className="bg-white hover:bg-gray-50 text-gray-700 font-semibold py-3 px-8 rounded-lg shadow-md border border-gray-300 transition-colors inline-block text-center"
+          >
             View Methodology
-          </button>
+          </a>
         </div>
 
         {/* Tech Stack */}
