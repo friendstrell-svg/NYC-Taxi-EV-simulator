@@ -60,7 +60,7 @@ export default function CostChart({ data }: CostChartProps) {
               />
               
               <Tooltip 
-                formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
+                formatter={(value) => `$${Number(value).toLocaleString()}`}
                 labelFormatter={(label) => `Year ${label}`}
                 contentStyle={{ 
                   backgroundColor: 'white', 
