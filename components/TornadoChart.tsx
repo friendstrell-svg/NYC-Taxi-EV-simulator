@@ -54,7 +54,7 @@ export default function TornadoChart({ data, viewMode }: TornadoChartProps) {
             />
             
             <Tooltip 
-              formatter={(value: number) => [`$${value.toFixed(0)}k`, '']}
+              formatter={(value) => `$${Number(value).toFixed(0)}k`}
               contentStyle={{ 
                 backgroundColor: 'white', 
                 border: '1px solid #d1d5db',
