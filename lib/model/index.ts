@@ -16,3 +16,7 @@ export {
   findPaybackYear,
   calculateModel,
 } from './calculations'
+
+// Export sensitivity analysis
+export type { SensitivityResult } from './sensitivity'
+export { calculateSensitivity } from './sensitivity'

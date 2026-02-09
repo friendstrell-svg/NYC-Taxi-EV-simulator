@@ -1,18 +1,23 @@
 'use client'
 
 import { useState } from 'react'
-import { calculateModel } from '@/lib/model'
+import { calculateModel, calculateSensitivity } from '@/lib/model'
 import { SCENARIOS, SCENARIO_LABELS, ScenarioName } from '@/lib/data/presets'
 import CostChart from '@/components/CostChart'
+import TornadoChart from '@/components/TornadoChart'
 
 export default function Dashboard() {
   // State for selected scenario and inputs
   const [selectedScenario, setSelectedScenario] = useState<ScenarioName>('nyc_defaults')
   const [inputs, setInputs] = useState(SCENARIOS.nyc_defaults)
   const [viewMode, setViewMode] = useState<'per_taxi' | 'fleet'>('fleet')
+  const [showSensitivity, setShowSensitivity] = useState(false)
   
   // Calculate outputs whenever inputs change
   const outputs = calculateModel(inputs)
+  
+  // Calculate sensitivity analysis
+  const sensitivityResults = calculateSensitivity(inputs)
   
   // Scale outputs based on view mode
   const displayOutputs = viewMode === 'per_taxi' 
@@ -32,6 +37,19 @@ export default function Dashboard() {
         }))
       }
     : outputs
+  
+  // Scale sensitivity results based on view mode
+  const displaySensitivity = viewMode === 'per_taxi'
+    ? sensitivityResults.map(s => ({
+        ...s,
+        baseNpv: s.baseNpv / inputs.fleetSize,
+        npvUp: s.npvUp / inputs.fleetSize,
+        npvDown: s.npvDown / inputs.fleetSize,
+        impactUp: s.impactUp / inputs.fleetSize,
+        impactDown: s.impactDown / inputs.fleetSize,
+        totalImpact: s.totalImpact / inputs.fleetSize,
+      }))
+    : sensitivityResults
   
   // Handle scenario change
   const handleScenarioChange = (scenario: ScenarioName) => {
@@ -403,6 +421,35 @@ export default function Dashboard() {
                 Cumulative Cost Over Time
               </h3>
               <CostChart data={displayOutputs.annualSeries} />
+            </div>
+            
+            {/* Sensitivity Analysis Section - Collapsible */}
+            <div className="mt-8">
+              <button
+                onClick={() => setShowSensitivity(!showSensitivity)}
+                className="w-full flex items-center justify-between bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+              >
+                <span className="flex items-center">
+                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                  </svg>
+                  Risk Analysis: Key Sensitivity Drivers
+                </span>
+                <svg 
+                  className={`w-5 h-5 transition-transform ${showSensitivity ? 'rotate-180' : ''}`}
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {showSensitivity && (
+                <div className="mt-4 bg-white border border-gray-200 rounded-lg p-6">
+                  <TornadoChart data={displaySensitivity} viewMode={viewMode} />
+                </div>
+              )}
             </div>
           </div>
         </div>
