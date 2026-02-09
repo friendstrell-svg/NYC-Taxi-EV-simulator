@@ -1,7 +1,7 @@
 'use client'
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts'
-import { SensitivityResult } from '@/lib/model'
+import { SensitivityResult } from '@/lib/model/sensitivity'
 
 interface TornadoChartProps {
   data: SensitivityResult[]
