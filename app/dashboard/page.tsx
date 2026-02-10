@@ -7,19 +7,14 @@ import CostChart from '@/components/CostChart'
 import TornadoChart from '@/components/TornadoChart'
 
 export default function Dashboard() {
-  // State for selected scenario and inputs
   const [selectedScenario, setSelectedScenario] = useState<ScenarioName>('nyc_defaults')
   const [inputs, setInputs] = useState(SCENARIOS.nyc_defaults)
   const [viewMode, setViewMode] = useState<'per_taxi' | 'fleet'>('fleet')
   const [showSensitivity, setShowSensitivity] = useState(false)
   
-  // Calculate outputs whenever inputs change
   const outputs = calculateModel(inputs)
-  
-  // Calculate sensitivity analysis
   const sensitivityResults = calculateSensitivity(inputs)
   
-  // Scale outputs based on view mode
   const displayOutputs = viewMode === 'per_taxi' 
     ? {
         ...outputs,
@@ -38,7 +33,6 @@ export default function Dashboard() {
       }
     : outputs
   
-  // Scale sensitivity results based on view mode
   const displaySensitivity = viewMode === 'per_taxi'
     ? sensitivityResults.map(s => ({
         ...s,
@@ -51,13 +45,11 @@ export default function Dashboard() {
       }))
     : sensitivityResults
   
-  // Handle scenario change
   const handleScenarioChange = (scenario: ScenarioName) => {
     setSelectedScenario(scenario)
     setInputs(SCENARIOS[scenario])
   }
   
-  // When user manually changes an input, switch to custom
   const updateInputAndSetCustom = (key: keyof typeof inputs, value: number | boolean) => {
     setSelectedScenario('custom')
     setInputs(prev => ({ ...prev, [key]: value }))
@@ -68,13 +60,24 @@ export default function Dashboard() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="flex justify-between items-start">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              NYC Taxi EV Simulator - Dashboard
-            </h1>
-            <p className="text-sm text-gray-600">
-              Adjust parameters to see real-time TCO analysis
-            </p>
+          <div className="flex items-center gap-4">
+            <a 
+              href="/" 
+              className="text-sm text-gray-500 hover:text-gray-700 font-medium flex items-center"
+            >
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Home
+            </a>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                NYC Taxi EV Simulator - Dashboard
+              </h1>
+              <p className="text-sm text-gray-600">
+                Adjust parameters to see real-time TCO analysis
+              </p>
+            </div>
           </div>
           <a 
             href="/methodology" 
@@ -90,7 +93,6 @@ export default function Dashboard() {
       
       {/* Scenario Selector & View Toggle */}
       <div className="flex flex-col sm:flex-row gap-4 mb-6 px-6 pt-6">
-        {/* Scenario Dropdown */}
         <div className="flex-1 bg-white rounded-lg shadow-md p-4">
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Scenario
@@ -113,7 +115,6 @@ export default function Dashboard() {
           )}
         </div>
         
-        {/* View Mode Toggle */}
         <div className="flex-1 bg-white rounded-lg shadow-md p-4">
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             View Mode
