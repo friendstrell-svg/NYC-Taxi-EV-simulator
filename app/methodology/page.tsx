@@ -6,9 +6,28 @@ export default function Methodology() {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="max-w-4xl mx-auto">
-          <Link href="/dashboard" className="text-blue-600 hover:text-blue-700 text-sm font-medium mb-2 inline-block">
-            ← Back to Dashboard
-          </Link>
+          {/* Navigation Row */}
+          <div className="flex justify-between items-center mb-3">
+            <Link 
+              href="/" 
+              className="text-sm text-gray-500 hover:text-gray-700 font-medium flex items-center"
+            >
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Home
+            </Link>
+            <Link 
+              href="/dashboard" 
+              className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center"
+            >
+              Dashboard
+              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+          
           <h1 className="text-3xl font-bold text-gray-900">
             Methodology & Assumptions
           </h1>
@@ -63,7 +82,7 @@ export default function Methodology() {
               <div className="border-l-2 border-gray-300 pl-4">
                 <strong className="text-gray-800">Resale/Residual Value</strong>
                 <p className="text-gray-600 text-sm mt-1">
-                  <em>Why excluded:</em> EV depreciation curves remain uncertain, especially for high-mileage commercial use. Conservative approach assumes vehicles reach end-of-life with minimal residual value. This slightly penalises EVs but avoids speculative assumptions.
+                  <em>Why excluded:</em> EV depreciation curves remain uncertain, especially for high-mileage commercial use. Conservative approach assumes vehicles reach end-of-life with minimal residual value. This slightly penalizes EVs but avoids speculative assumptions.
                 </p>
               </div>
               
@@ -91,7 +110,7 @@ export default function Methodology() {
               <div className="border-l-2 border-gray-300 pl-4">
                 <strong className="text-gray-800">Range Anxiety / Route Limitations</strong>
                 <p className="text-gray-600 text-sm mt-1">
-                  <em>Why excluded:</em> Qualitative factor difficult to monetise. Modern EVs (300+ mile range) meet typical taxi duty cycles. Operational planning (shift scheduling, charging strategy) can mitigate. Not a direct cost but a fleet management consideration.
+                  <em>Why excluded:</em> Qualitative factor difficult to monetize. Modern EVs (300+ mile range) meet typical taxi duty cycles. Operational planning (shift scheduling, charging strategy) can mitigate. Not a direct cost but a fleet management consideration.
                 </p>
               </div>
             </div>
@@ -110,7 +129,7 @@ export default function Methodology() {
             
             <div>
               <h4 className="font-semibold text-gray-800">Annual Mileage (70,000 miles/year)</h4>
-              <p className="text-gray-600 text-sm">Source: Industry averages for high-utilisation urban taxis</p>
+              <p className="text-gray-600 text-sm">Source: Industry averages for high-utilization urban taxis</p>
             </div>
             
             <div>
@@ -184,11 +203,11 @@ export default function Methodology() {
           <ul className="space-y-2 text-gray-700">
             <li className="flex items-start">
               <span className="text-yellow-600 mr-2 mt-1">⚠</span>
-              <span><strong>Deterministic Model:</strong> Does not account for stochastic demand variations, weather impacts, or seasonal utilisation changes</span>
+              <span><strong>Deterministic Model:</strong> Does not account for stochastic demand variations, weather impacts, or seasonal utilization changes</span>
             </li>
             <li className="flex items-start">
               <span className="text-yellow-600 mr-2 mt-1">⚠</span>
-              <span><strong>Static Grid Intensity:</strong> Assumes constant grid emissions; does not model grid decarbonisation trajectories over analysis period</span>
+              <span><strong>Static Grid Intensity:</strong> Assumes constant grid emissions; does not model grid decarbonization trajectories over analysis period</span>
             </li>
             <li className="flex items-start">
               <span className="text-yellow-600 mr-2 mt-1">⚠</span>
@@ -200,6 +219,28 @@ export default function Methodology() {
             </li>
           </ul>
         </section>
+
+        {/* Bottom Navigation */}
+        <div className="flex justify-between items-center mt-8">
+          <Link 
+            href="/" 
+            className="text-sm text-gray-500 hover:text-gray-700 font-medium flex items-center"
+          >
+            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Home
+          </Link>
+          <Link 
+            href="/dashboard" 
+            className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center"
+          >
+            Dashboard
+            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
       </div>
     </div>
   )
