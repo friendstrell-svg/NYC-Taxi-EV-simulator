@@ -293,6 +293,99 @@ export default function Dashboard() {
                 />
               </div>
             </div>
+
+            {/* Advanced Parameters */}
+            <div className="mb-6">
+              <h3 className="font-semibold text-gray-700 mb-3">Advanced Parameters</h3>
+              
+              {/* Charger Infrastructure */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Charger Cost per Vehicle: ${inputs.chargerCapexPerVehicle.toLocaleString()}
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="5000"
+                  step="100"
+                  value={inputs.chargerCapexPerVehicle}
+                  onChange={(e) => updateInputAndSetCustom('chargerCapexPerVehicle', Number(e.target.value))}
+                  className="w-full"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Infrastructure allocation per EV (charging station share)
+                </p>
+              </div>
+              
+              {/* EV Incentive */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  EV Incentive per Vehicle: ${inputs.incentivePerVehicle.toLocaleString()}
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="10000"
+                  step="500"
+                  value={inputs.incentivePerVehicle}
+                  onChange={(e) => updateInputAndSetCustom('incentivePerVehicle', Number(e.target.value))}
+                  className="w-full"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Federal/state tax credits and subsidies
+                </p>
+              </div>
+              
+              {/* Battery Replacement Toggle */}
+              <div className="mb-4">
+                <label className="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={inputs.batteryReplacementEnabled}
+                    onChange={(e) => updateInputAndSetCustom('batteryReplacementEnabled', e.target.checked)}
+                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="ml-2 text-sm font-medium text-gray-700">
+                    Enable Battery Replacement
+                  </span>
+                </label>
+              </div>
+              
+              {/* Battery Replacement Year - Conditional */}
+              {inputs.batteryReplacementEnabled && (
+                <>
+                  <div className="mb-4 ml-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Replacement Year: Year {inputs.batteryReplacementYear || 8}
+                    </label>
+                    <input
+                      type="range"
+                      min="3"
+                      max="12"
+                      step="1"
+                      value={inputs.batteryReplacementYear || 8}
+                      onChange={(e) => updateInputAndSetCustom('batteryReplacementYear', Number(e.target.value))}
+                      className="w-full"
+                    />
+                  </div>
+                  
+                  <div className="mb-4 ml-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Replacement Cost: ${(inputs.batteryReplacementCost || 15000).toLocaleString()}
+                    </label>
+                    <input
+                      type="range"
+                      min="5000"
+                      max="30000"
+                      step="1000"
+                      value={inputs.batteryReplacementCost || 15000}
+                      onChange={(e) => updateInputAndSetCustom('batteryReplacementCost', Number(e.target.value))}
+                      className="w-full"
+                    />
+                  </div>
+                </>
+              )}
+            </div>
             
             <button
               onClick={() => handleScenarioChange('nyc_defaults')}
