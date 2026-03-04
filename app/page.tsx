@@ -268,10 +268,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer Note */}
-      <div className="max-w-6xl mx-auto px-6 py-8 text-center text-sm text-gray-500">
-        <p>Version 1.0 | Model under active development</p>
-      </div>
     </div>
   )
 }
