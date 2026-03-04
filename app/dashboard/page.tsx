@@ -6,6 +6,7 @@ import { SCENARIOS, SCENARIO_LABELS, ScenarioName } from '@/lib/data/presets'
 import CostChart from '@/components/CostChart'
 import TornadoChart from '@/components/TornadoChart'
 import { exportToCSV } from '@/lib/exportUtils'
+import ScenarioComparison from '@/components/ScenarioComparison'
 
 export default function Dashboard() {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioName>('nyc_defaults')
@@ -300,6 +301,11 @@ export default function Dashboard() {
               Reset to NYC Defaults
             </button>
           </div>
+
+          {/* Scenario Comparison - Below Input Parameters */}
+          <div className="mt-6">
+            <ScenarioComparison />
+          </div>
         </div>
         
         {/* RIGHT PANEL - Outputs */}
@@ -436,7 +442,6 @@ export default function Dashboard() {
               <CostChart data={displayOutputs.annualSeries} />
             </div>
 
-            
             {/* Sensitivity Analysis Section - Collapsible */}
             <div className="mt-8">
               <button
