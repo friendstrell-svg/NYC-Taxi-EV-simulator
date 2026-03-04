@@ -79,7 +79,7 @@ export default function Home() {
               <p className="text-sm text-yellow-700">
                 <strong className="font-semibold">NYC Defaults:</strong> The model comes
                 pre-configured with baseline assumptions for NYC yellow taxis including
-                fleet size, utilization rates, and local grid intensity.
+                fleet size, utilisation rates, and local grid intensity.
               </p>
             </div>
           </div>
