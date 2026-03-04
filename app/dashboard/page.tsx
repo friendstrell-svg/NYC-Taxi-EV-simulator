@@ -5,6 +5,7 @@ import { calculateModel, calculateSensitivity } from '@/lib/model'
 import { SCENARIOS, SCENARIO_LABELS, ScenarioName } from '@/lib/data/presets'
 import CostChart from '@/components/CostChart'
 import TornadoChart from '@/components/TornadoChart'
+import { exportToCSV } from '@/lib/exportUtils'
 
 export default function Dashboard() {
   const [selectedScenario, setSelectedScenario] = useState<ScenarioName>('nyc_defaults')
@@ -304,9 +305,20 @@ export default function Dashboard() {
         {/* RIGHT PANEL - Outputs */}
         <div className="lg:w-1/2">
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-bold mb-4 text-gray-900">
-              Results
-            </h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-gray-900">
+                Results
+              </h2>
+              <button
+                onClick={() => exportToCSV(inputs, outputs, viewMode)}
+                className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg transition-colors text-sm"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Export to CSV
+              </button>
+            </div>
 
             {/* Business Summary - Front & Center */}
             <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow-lg p-6 mb-6 text-white">
@@ -423,6 +435,7 @@ export default function Dashboard() {
               </h3>
               <CostChart data={displayOutputs.annualSeries} />
             </div>
+
             
             {/* Sensitivity Analysis Section - Collapsible */}
             <div className="mt-8">
