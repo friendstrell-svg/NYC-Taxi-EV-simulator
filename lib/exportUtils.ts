@@ -33,7 +33,7 @@ export function exportToCSV(
   csv += `Electricity Price ($/kWh),${inputs.elecPricePerKWh.toFixed(2)}\n`
   csv += `EV Maintenance ($/mile),${inputs.maintPerMileEv.toFixed(2)}\n`
   csv += `EV Purchase Price ($),${inputs.capexEv}\n`
-  csv += `EV Incentive ($),${inputs.incentiveEv}\n`
+  csv += `EV Incentive ($/vehicle),${inputs.incentivePerVehicle}\n`
   csv += `Grid Intensity (gCO2/kWh),${inputs.gridIntensity_g_per_kWh}\n`
   csv += '\n'
   
